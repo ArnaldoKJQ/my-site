@@ -38,29 +38,19 @@ const CONFIG = {
   CONTACT_EMAIL: "arnaldokoo@gmail.com",
   CONTACT_MSG:
     "Whether it's a NetSuite, a side project, or just a chat — feel free to reach out.",
-  WORKER_URL: "http://localhost:8787",
+  WORKER_URL: "https://my-site-worker.YOUR_SUBDOMAIN.workers.dev",
 
   // Skills section
   SKILLS: [
     {
       cat: "ERP & Consulting",
       name: "NetSuite",
-      tags: [
-        "SuiteScript 2.x",
-        "SuiteAnalytics",
-        "SuiteFlow",
-        "REST API",
-      ],
+      tags: ["SuiteScript 2.x", "SuiteAnalytics", "SuiteFlow", "REST API"],
     },
     {
       cat: "Frontend",
       name: "Web Development",
-      tags: [
-        "HTML/CSS",
-        "JavaScript",
-        "Chrome Extensions",
-        "GitHub Pages",
-      ],
+      tags: ["HTML/CSS", "JavaScript", "Chrome Extensions", "GitHub Pages"],
     },
     {
       cat: "Backend & Infra",

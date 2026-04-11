@@ -104,7 +104,7 @@
         // connect your LinkedIn account to enable auto-posting.<br>
         // token lasts ~55 days. visit this page again to reconnect.
       </p>
-      <a href="http://localhost:8787/api/linkedin/auth" target="_blank" class="btn btn-primary" style="display:inline-flex;">
+      <a href="https://my-site-worker.YOUR_SUBDOMAIN.workers.dev/api/linkedin/auth" target="_blank" class="btn btn-primary" style="display:inline-flex;">
         Connect LinkedIn Account ↗
       </a>
       <p style="margin-top:1.5rem;font-size:0.78rem;color:var(--muted);font-family:var(--font-mono);">
@@ -118,7 +118,7 @@
 <div class="toast" id="toast"></div>
 
 <script>
-const WORKER = 'http://localhost:8787';
+const WORKER = 'https://my-site-worker.YOUR_SUBDOMAIN.workers.dev';
 let authToken = sessionStorage.getItem('admin_token') || '';
 let editingSlug = null;
 
