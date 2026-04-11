@@ -80,7 +80,7 @@
       liBtn.disabled = true;
       liBtn.textContent = 'Posting...';
       try {
-        const res = await fetch('https://my-site-worker.YOUR_SUBDOMAIN.workers.dev/api/linkedin-post', {
+        const res = await fetch('https://my-site.YOUR_SUBDOMAIN.workers.dev/api/linkedin-post', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({

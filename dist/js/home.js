@@ -99,7 +99,7 @@
   // ── Blog post count (fetch from worker or skip) ───────
   const blogCountEl = document.getElementById('blog-count');
   if (blogCountEl) {
-    const WORKER = 'https://my-site-worker.YOUR_SUBDOMAIN.workers.dev';
+    const WORKER = 'https://my-site.YOUR_SUBDOMAIN.workers.dev';
     if (WORKER && !WORKER.includes('{{')) {
       fetch(`${WORKER}/api/posts`)
         .then(r => r.json())
