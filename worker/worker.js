@@ -83,7 +83,7 @@ async function githubRequest(env, method, filePath, body) {
       'Authorization': `Bearer ${env.GITHUB_TOKEN}`,
       'Accept': 'application/vnd.github+json',
       'X-GitHub-Api-Version': '2022-11-28',
-      'User-Agent': 'my-site-worker',
+      'User-Agent': 'my-site',
       'Content-Type': 'application/json',
     },
     body: body ? JSON.stringify(body) : undefined,
