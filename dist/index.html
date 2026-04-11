@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arnaldo — NetSuite Consultant · Builder</title>
+  <meta name="description" content="I build tools that make work easier. NetSuite consultant by day, tinkerer by night. Based in Malaysia.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>▣</text></svg>">
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-dot" id="cursor-dot"></div>
+
+<!-- LOADER -->
+<div class="loader" id="loader">
+  <div class="loader-bar-wrap"><div class="loader-bar" id="loader-bar"></div></div>
+  <div class="loader-text">
+    <div class="loader-name" id="loader-name">
+      <span>Arnaldo</span><span>Koo</span>
+    </div>
+    <div class="loader-counter" id="loader-counter">0</div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <a href="index.html" class="nav-logo">Arnaldo</a>
+  <div class="nav-right">
+    <a href="blog.html" class="nav-blog-link">Blog</a>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span class="ham-line"></span>
+      <span class="ham-line"></span>
+    </button>
+  </div>
+</nav>
+
+<!-- FULLSCREEN MENU -->
+<div class="menu" id="menu">
+  <div class="menu-links">
+    <a class="menu-item" href="#about"      data-index="01">About</a>
+    <a class="menu-item" href="#work"       data-index="02">Work</a>
+    <a class="menu-item" href="#skills"     data-index="03">Skills</a>
+    <a class="menu-item" href="#experience" data-index="04">Experience</a>
+    <a class="menu-item" href="blog.html"   data-index="05">Blog</a>
+    <a class="menu-item" href="#contact"    data-index="06">Contact</a>
+  </div>
+  <div class="menu-socials">
+    <a href="mailto:arnaldokoo@gmail.com">Email ↗</a>
+    <a href="https://github.com/ArnaldoKJQ" target="_blank">GitHub ↗</a>
+    <a href="https://linkedin.com/in/arnaldokjq" target="_blank">LinkedIn ↗</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-badge">
+    <span class="hero-badge-dot"></span>
+    Open to networking
+  </div>
+
+  <h1 class="hero-heading">
+    <span class="hero-word" id="hw1">Arnaldo</span>
+    <span class="hero-word hero-word--right" id="hw2">Koo</span>
+  </h1>
+
+  <div class="hero-sub">
+    <p class="hero-bio">I build tools that make work easier. NetSuite consultant by day, tinkerer by night. Based in Malaysia.</p>
+    <div class="hero-role-tag">NetSuite Consultant · Builder</div>
+  </div>
+
+  <div class="hero-scroll-hint">
+    <span>Scroll to explore</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap" aria-hidden="true">
+  <div class="marquee-track">
+    <span>NetSuite Consultant</span><span class="marquee-dot">✦</span>
+    <span>Full-Stack Developer</span><span class="marquee-dot">✦</span>
+    <span>Chrome Extensions</span><span class="marquee-dot">✦</span>
+    <span>Cloudflare Workers</span><span class="marquee-dot">✦</span>
+    <span>GitHub Pages</span><span class="marquee-dot">✦</span>
+    <span>SuiteScript 2.x</span><span class="marquee-dot">✦</span>
+    <span>NetSuite Consultant</span><span class="marquee-dot">✦</span>
+    <span>Full-Stack Developer</span><span class="marquee-dot">✦</span>
+    <span>Chrome Extensions</span><span class="marquee-dot">✦</span>
+    <span>Cloudflare Workers</span><span class="marquee-dot">✦</span>
+    <span>GitHub Pages</span><span class="marquee-dot">✦</span>
+    <span>SuiteScript 2.x</span><span class="marquee-dot">✦</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-label">
+    <span class="section-num">01</span>
+    <span>About</span>
+  </div>
+  <div class="about-body">
+    <p class="about-text">I specialise in NetSuite implementations, and building web tools that close the gap between what ERP systems offer and what teams actually need. When I'm not consulting, I'm building Chrome extensions, Cloudflare Workers, and side projects to automate mundane tasks.</p>
+    <div class="about-stats">
+      <div class="stat">
+        <div class="stat-n" id="repo-count">—</div>
+        <div class="stat-l">Public repos</div>
+      </div>
+      <div class="stat">
+        <div class="stat-n">2+</div>
+        <div class="stat-l">Years exp</div>
+      </div>
+      <div class="stat">
+        <div class="stat-n" id="blog-count">—</div>
+        <div class="stat-l">Blog posts</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WORK -->
+<section class="work" id="work">
+  <div class="work-header">
+    <div class="work-label">
+      <span class="section-num">02</span>
+      <span>Selected Work</span>
+    </div>
+    <div class="work-filters" id="topic-filters">
+      <button class="wf" data-topic="all" class="active">All</button>
+    </div>
+  </div>
+  <div class="work-grid" id="projects-grid">
+    <div class="work-loading">Loading<span class="ldots"></span></div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="skills-section" id="skills">
+  <div class="skills-label">
+    <span class="section-num">03</span>
+    <span>Skills & Stack</span>
+  </div>
+  <div class="skills-body">
+    
+    <div class="skill-card">
+      <div class="skill-cat">ERP & Consulting</div>
+      <div class="skill-name">NetSuite</div>
+      <div class="skill-tags"><span class="tag">SuiteScript 2.x</span><span class="tag">SuiteAnalytics</span><span class="tag">SuiteFlow</span><span class="tag">REST API</span></div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-cat">Frontend</div>
+      <div class="skill-name">Web Development</div>
+      <div class="skill-tags"><span class="tag">HTML/CSS</span><span class="tag">JavaScript</span><span class="tag">Chrome Extensions</span><span class="tag">GitHub Pages</span></div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-cat">Backend & Infra</div>
+      <div class="skill-name">Server & Cloud</div>
+      <div class="skill-tags"><span class="tag">Node.js</span><span class="tag">Cloudflare Workers</span><span class="tag">GitHub Actions</span><span class="tag">REST APIs</span></div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-cat">Tooling</div>
+      <div class="skill-name">Productivity Stack</div>
+      <div class="skill-tags"><span class="tag">Jira</span><span class="tag">SharePoint</span><span class="tag">Microsoft 365</span><span class="tag">Groq / Llama</span><span class="tag">ChatGPT</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section class="exp-section" id="experience">
+  <div class="exp-label">
+    <span class="section-num">04</span>
+    <span>Experience</span>
+  </div>
+  <div class="exp-body">
+    
+    <div class="exp-item">
+      <div class="exp-period">June 2024 — Now</div>
+      <div>
+        <div class="exp-role">NetSuite Consultant</div>
+        <div class="exp-company">BlackOak Consulting</div>
+        <div class="exp-desc">Functional consultant advising multiple clients on NetSuite implementations, integrations, and process automation. Built internal tooling and Chrome extensions to improve team productivity.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+  <p class="contact-pre">Let's work together</p>
+  <a href="mailto:arnaldokoo@gmail.com" class="contact-cta" id="contact-cta">
+    <span class="contact-cta-text">arnaldokoo@gmail.com</span>
+    <span class="contact-cta-arrow">↗</span>
+  </a>
+  <div class="contact-socials">
+    <a href="https://github.com/ArnaldoKJQ" target="_blank" rel="noopener">GitHub</a>
+    <a href="https://linkedin.com/in/arnaldokjq" target="_blank" rel="noopener">LinkedIn</a>
+    <a href="blog.html">Blog</a>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <span>Arnaldo © <span id="footer-year"></span></span>
+  <span>Node.js + GitHub Pages</span>
+</footer>
+
+<script src="js/main.js"></script>
+<script src="js/home.js"></script>
+</body>
+</html>

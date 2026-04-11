@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{POST_TITLE}} — {{SITE_NAME}}</title>
+  <meta name="description" content="{{POST_EXCERPT}}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>▣</text></svg>">
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-dot" id="cursor-dot"></div>
+
+<nav class="nav" style="mix-blend-mode:normal;background:rgba(8,8,8,0.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);">
+  <a href="../index.html" class="nav-logo" style="opacity:1;transform:none;">{{SITE_NAME}}</a>
+  <div class="nav-right" style="opacity:1;transform:none;">
+    <a href="../blog.html" class="nav-blog-link">← Blog</a>
+  </div>
+</nav>
+
+<article class="post-wrap">
+  <a href="../blog.html" class="post-back">← All posts</a>
+
+  <div class="post-meta">
+    <span class="post-date">{{POST_DATE}}</span>
+    {{POST_TAGS_HTML}}
+  </div>
+
+  <h1 class="post-title">{{POST_TITLE}}</h1>
+  <p class="post-excerpt">{{POST_EXCERPT}}</p>
+
+  <div style="display:flex;gap:1rem;align-items:center;margin-bottom:2rem;flex-wrap:wrap;">
+    {{LINKEDIN_BTN}}
+  </div>
+
+  <div class="post-divider"></div>
+  <div class="post-body">{{POST_CONTENT}}</div>
+</article>
+
+<footer class="site-footer">
+  <span>{{SITE_NAME}} © <span id="footer-year"></span></span>
+  <span><a href="../blog.html" style="color:var(--muted)">← Back to blog</a></span>
+</footer>
+
+<div class="toast" id="toast"></div>
+<script src="../js/main.js"></script>
+<script>
+  // Cursor
+  const cursor=document.getElementById('cursor'),dot=document.getElementById('cursor-dot');
+  let mx=0,my=0,cx=0,cy=0;
+  document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;dot.style.left=mx+'px';dot.style.top=my+'px';});
+  (function tick(){cx+=(mx-cx)*.12;cy+=(my-cy)*.12;cursor.style.left=cx+'px';cursor.style.top=cy+'px';requestAnimationFrame(tick);})();
+  document.querySelectorAll('a,button').forEach(el=>{
+    el.addEventListener('mouseenter',()=>document.body.classList.add('cursor-hover'));
+    el.addEventListener('mouseleave',()=>document.body.classList.remove('cursor-hover'));
+  });
+
+  // LinkedIn button
+  const liBtn = document.getElementById('li-post-btn');
+  if (liBtn) {
+    liBtn.addEventListener('click', async () => {
+      liBtn.disabled = true;
+      liBtn.textContent = 'Posting...';
+      try {
+        const res = await fetch('{{WORKER_URL}}/api/linkedin-post', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            title: {{POST_TITLE_JSON}},
+            excerpt: {{POST_EXCERPT_JSON}},
+            url: window.location.href
+          })
+        });
+        const data = await res.json();
+        if (data.ok) {
+          liBtn.textContent = '✓ Posted to LinkedIn';
+          liBtn.classList.add('posted');
+        } else {
+          liBtn.textContent = 'Error — try again';
+          liBtn.disabled = false;
+        }
+      } catch {
+        liBtn.textContent = 'Error — try again';
+        liBtn.disabled = false;
+      }
+    });
+  }
+</script>
+</body>
+</html>
