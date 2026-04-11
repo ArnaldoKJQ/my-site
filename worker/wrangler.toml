@@ -5,7 +5,7 @@ compatibility_flags = ["nodejs_compat"]
 
 [[kv_namespaces]]
 binding = "SITE_KV"
-id = "REPLACE_WITH_YOUR_KV_NAMESPACE_ID"
+id = "fb33c35123d64098b6fdce73ea351ac8"
 
 # After deploying, set these secrets with:
 #   wrangler secret put ADMIN_PASSWORD
