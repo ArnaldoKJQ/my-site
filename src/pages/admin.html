@@ -192,7 +192,15 @@ document.getElementById('publish-btn').addEventListener('click', async () => {
     });
     const data = await res.json();
     if (data.ok) {
-      toast(editingSlug ? 'Post updated! Rebuilding site...' : 'Published! Rebuilding site...', 'success');
+      if (data.linkedin) {
+        const linkedInOk = data.linkedin.ok;
+        const message = linkedInOk
+          ? `${editingSlug ? 'Post updated' : 'Published'} and shared to LinkedIn.`
+          : `${editingSlug ? 'Post updated' : 'Published'}, but LinkedIn failed${data.linkedin.status ? ` (${data.linkedin.status})` : ''}.`;
+        toast(message, linkedInOk ? 'success' : 'error');
+      } else {
+        toast(editingSlug ? 'Post updated! Rebuilding site...' : 'Published! Rebuilding site...', 'success');
+      }
       clearForm();
       loadPosts();
     } else if (data.error === 'unauthorized') {

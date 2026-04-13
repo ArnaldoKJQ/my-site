@@ -1,25 +1,3 @@
-/**
- * Cloudflare Worker — my-site backend
- *
- * Routes:
- *   POST   /api/auth               → verify password, return session token
- *   GET    /api/posts              → list all posts (auth required)
- *   GET    /api/post/:slug         → get single post raw (auth required)
- *   POST   /api/post               → create new post (auth required)
- *   PUT    /api/post               → edit existing post (auth required)
- *   DELETE /api/post/:slug         → delete post (auth required)
- *   POST   /api/linkedin-post      → post to LinkedIn (called from blog page)
- *   GET    /api/linkedin/auth      → start LinkedIn OAuth
- *   GET    /api/linkedin/callback  → LinkedIn OAuth callback
- *
- * KV namespace binding (wrangler.toml): SITE_KV
- *
- * Secrets to set via `wrangler secret put`:
- *   ADMIN_PASSWORD, GITHUB_TOKEN, GITHUB_OWNER, GITHUB_REPO,
- *   LINKEDIN_CLIENT_ID, LINKEDIN_CLIENT_SECRET, LINKEDIN_REDIRECT_URI,
- *   CLAUDE_API_KEY, SITE_URL
- */
-
 // ─── Helpers ────────────────────────────────────────────────────────────────
 
 function corsHeaders(origin) {
@@ -204,29 +182,46 @@ async function getLinkedInPersonUrn(accessToken) {
   return data.sub;
 }
 
-async function postToLinkedIn(accessToken, authorUrn, text) {
-  const res = await fetch('https://api.linkedin.com/v2/ugcPosts', {
+async function readResponseBody(res) {
+  const text = await res.text();
+  if (!text) return null;
+  try {
+    return JSON.parse(text);
+  } catch {
+    return text;
+  }
+}
+
+async function postToLinkedIn(accessToken, authorUrn, text, env) {
+  const version = env.LINKEDIN_API_VERSION || '202603';
+  const res = await fetch('https://api.linkedin.com/rest/posts', {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${accessToken}`,
       'Content-Type': 'application/json',
+      'Linkedin-Version': version,
       'X-Restli-Protocol-Version': '2.0.0',
     },
     body: JSON.stringify({
       author: `urn:li:person:${authorUrn}`,
       lifecycleState: 'PUBLISHED',
-      specificContent: {
-        'com.linkedin.ugc.ShareContent': {
-          shareCommentary: { text },
-          shareMediaCategory: 'NONE',
-        },
+      visibility: 'PUBLIC',
+      commentary: text,
+      distribution: {
+        feedDistribution: 'MAIN_FEED',
+        targetEntities: [],
+        thirdPartyDistributionChannels: [],
       },
-      visibility: {
-        'com.linkedin.ugc.MemberNetworkVisibility': 'PUBLIC',
-      },
+      isReshareDisabledByAuthor: false,
     }),
   });
-  return res.ok;
+  const body = await readResponseBody(res);
+  return {
+    ok: res.ok,
+    status: res.status,
+    postId: res.headers.get('x-restli-id') || body?.id || null,
+    body,
+  };
 }
 
 // ─── Main fetch handler ──────────────────────────────────────────────────────
@@ -307,17 +302,22 @@ export default {
         }));
 
         if (body.postToLinkedIn) {
+          let linkedinResult = { ok: false, skipped: true, error: 'LinkedIn not requested' };
           try {
             const token = await env.SITE_KV.get('linkedin:token');
             if (token) {
               const urn     = await env.SITE_KV.get('linkedin:urn');
               const postUrl = `${env.SITE_URL}/posts/${slug}.html`;
               const text    = await generateLinkedInPost(env, { ...body, date, url: postUrl });
-              await postToLinkedIn(token, urn, text);
+              linkedinResult = await postToLinkedIn(token, urn, text, env);
+            } else {
+              linkedinResult = { ok: false, error: 'LinkedIn not connected' };
             }
           } catch (e) {
-            console.error('LinkedIn post failed:', e.message);
+            console.error('LinkedIn post failed:', e);
+            linkedinResult = { ok: false, error: e.message || 'LinkedIn post failed' };
           }
+          return json({ ok: true, slug, linkedin: linkedinResult }, 200, origin);
         }
 
         return json({ ok: true, slug }, 200, origin);
@@ -363,9 +363,15 @@ export default {
           content: body.excerpt || '',
           url: body.url || env.SITE_URL,
         });
-        const posted = await postToLinkedIn(token, urn, text);
-        if (!posted) return err('LinkedIn API error', 500, origin);
-        return json({ ok: true }, 200, origin);
+        const result = await postToLinkedIn(token, urn, text, env);
+        if (!result.ok) {
+          return json({
+            ok: false,
+            error: 'LinkedIn API error',
+            linkedin: result,
+          }, 500, origin);
+        }
+        return json({ ok: true, linkedin: result }, 200, origin);
       }
 
       // GET /api/linkedin/auth

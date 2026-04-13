@@ -61,7 +61,7 @@
   });
 
   // LinkedIn button
-  const liBtn = document.getElementById('li-post-btn');
+const liBtn = document.getElementById('li-post-btn');
   if (liBtn) {
     liBtn.addEventListener('click', async () => {
       liBtn.disabled = true;
@@ -81,11 +81,13 @@
           liBtn.textContent = '✓ Posted to LinkedIn';
           liBtn.classList.add('posted');
         } else {
-          liBtn.textContent = 'Error — try again';
+          liBtn.textContent = data.linkedin?.status
+            ? `Error ${data.linkedin.status} - try again`
+            : 'Error - try again';
           liBtn.disabled = false;
         }
       } catch {
-        liBtn.textContent = 'Error — try again';
+        liBtn.textContent = 'Error - try again';
         liBtn.disabled = false;
       }
     });
