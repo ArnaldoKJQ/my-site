@@ -38,7 +38,8 @@ const CONFIG = {
   CONTACT_EMAIL: "arnaldokoo@gmail.com",
   CONTACT_MSG:
     "Whether it's a NetSuite, a side project, or just a chat — feel free to reach out.",
-  WORKER_URL: "https://my-site.YOUR_SUBDOMAIN.workers.dev",
+  // Empty means "use the current origin", which fits a Worker + assets deploy.
+  WORKER_URL: process.env.WORKER_URL || "",
 
   // Skills section
   SKILLS: [

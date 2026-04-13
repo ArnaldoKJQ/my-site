@@ -1,2 +1,12 @@
 name = "my-site"
-pages_build_output_dir = "dist"
+main = "worker/worker.js"
+compatibility_date = "2026-04-13"
+compatibility_flags = ["nodejs_compat"]
+
+[assets]
+directory = "./dist"
+run_worker_first = ["/api/*"]
+
+[[kv_namespaces]]
+binding = "SITE_KV"
+id = "fb33c35123d64098b6fdce73ea351ac8"
